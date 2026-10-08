@@ -1,0 +1,22 @@
+# Review billing before creating this service. The persistent disk needs a paid plan.
+services:
+  - type: web
+    name: atlas-company-hub
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    disk:
+      name: atlas-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /app/data/atlas.sqlite
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

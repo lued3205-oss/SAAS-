@@ -1,0 +1,3 @@
+import {createApp} from './app.js';
+const {app,db}=createApp();const server=app.listen(Number(process.env.PORT||3000),'0.0.0.0',()=>console.log('Atlas server listening on port '+(process.env.PORT||3000)));
+for(const signal of ['SIGTERM','SIGINT'])process.on(signal,()=>server.close(()=>{db.close();process.exit(0)}));
