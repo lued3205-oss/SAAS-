@@ -1,20 +1,23 @@
-# Review billing before creating this service. The persistent disk needs a paid plan.
+# Optional full-stack preview. Free plan; no paid disk or paid resources.
+# Storage is ephemeral. Use test information only, not real business data.
 services:
   - type: web
-    name: atlas-company-hub
-    runtime: docker
-    plan: starter
+    name: atlas-free-preview
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
     healthCheckPath: /api/health
-    disk:
-      name: atlas-data
-      mountPath: /app/data
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NODE_VERSION
+        value: "24"
       - key: DB_PATH
-        value: /app/data/atlas.sqlite
+        value: /tmp/atlas-preview.sqlite
       - key: COOKIE_SECURE
+        value: "true"
+      - key: PREVIEW_MODE
         value: "true"
       - key: ADMIN_EMAIL
         sync: false
